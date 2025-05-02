@@ -1,0 +1,48 @@
+<html lang="ar"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <p id="status">Required parameters are missing.</p>
+
+    <script>
+        // Function to get URL parameters
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                everything: params.get("everything"),
+                code: params.get("code"),
+                adapter: params.get("adapter"),
+            
+
+            };
+        }
+
+        // Function to create the deep link
+        function createLink( everything, code, adapter ) {
+            const baseUrl = "selfierdv://";
+            const query = `?everything=${everything}&code=${code}&adapter=${adapter}`;
+            return baseUrl + query;
+        }
+
+        // Run when the document is ready
+        document.addEventListener("DOMContentLoaded", () => {
+            const { everything, code ,adapter} = getUrlParams();
+
+            if (everything && code && adapter ) {
+                const appLink = createLink(everything, code, adapter  );
+
+                // Open the app link
+                window.location.href = appLink;
+                document.getElementById("status").innerText = "Opening the app...";
+            } else {
+                // Display a message if parameters are missing
+                document.getElementById("status").innerText = "Required parameters are missing.";
+            }
+        });
+    </script>
+
+
+</body></html>
